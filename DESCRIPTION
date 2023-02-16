@@ -19,3 +19,5 @@ Imports:
     MASS,
     stats
 Roxygen: list(markdown = TRUE)
+URL: https://github.com/benmarwick/roev
+BugReports: https://github.com/benmarwick/roev/issues
