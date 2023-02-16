@@ -1,0 +1,21 @@
+Package: roev
+Title: Rates of Evolution
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Philip", "Gingerich", email = "", role = "aut", comment = c(ORCID = "0000-0002-1550-2674")),
+    person("Ben", "Marwick", email = "benmarwick@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7879-4531")))
+Description: Functions written by Philip D. Gingerich to accompany his book 
+    'Rates of Evolution: A Quantitative Synthesis' <https://doi.org/10.1017/9781316711644>
+    Originally deposited by at Gingerich https://doi.org/10.5061/dryad.1tn7123 and adapted for use by Ben Marwick.
+Depends: R (>= 3.3.3)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
+Imports: 
+    glue,
+    lifecycle,
+    rlang,
+    MASS,
+    stats
+Roxygen: list(markdown = TRUE)

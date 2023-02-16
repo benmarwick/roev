@@ -1,0 +1,73 @@
+Sex,Trait,Age0,N0,Mean0,V0,Age1,N1,Mean1,V1,Age2,N2,Mean2,V2,Age3,N3,Mean3,V3,Age4,N4,Mean4,V4
+Male,"Spread of horn cores, tip to tip",130000,23,887.8,11.0,120000,19,1789.1,11.7,14000,27,870.0,8.2,8000,77,779.3,9.9,2500,128,603.9,7.4
+Male,"Horn core length, upper curve, tip to burr",130000,36,362.7,9.7,120000,25,876.0,16.1,14000,32,279.2,12.6,8000,86,277.8,14.1,2500,134,190.7,13.0
+Male,"Straight line distance, tip to burr, dorsal horn core",130000,36,318.4,9.9,120000,20,805.4,14.6,14000,30,249.7,11.7,8000,81,248.1,12.8,2500,132,172.4,12.4
+Male,"Dorso-ventral diameter, horn core base",130000,52,98.3,7.0,120000,34,144.9,11.4,14000,39,101.9,9.5,8000,85,94.6,8.9,2500,139,81.9,7.9
+Male,"Minimum circumference, horn core base",130000,52,330.1,6.4,120000,36,489.2,10.7,14000,38,324.4,10.0,8000,89,300.3,9.2,2500,142,255.4,7.6
+Male,Width of occipital at auditory openings,130000,21,276.3,5.3,120000,14,322.9,5.3,14000,20,287.9,6.5,8000,61,262.0,5.0,2500,120,243.9,4.0
+Male,Width of occipital condyles,130000,25,141.1,4.9,120000,17,159.5,6.4,14000,20,143.7,5.9,8000,71,135.0,5.7,2500,122,126.6,4.5
+Male,"Depth, nuchal line to dorsal margin of foramen magnum",130000,26,102.9,8.1,120000,12,125.5,9.7,14000,18,111.6,8.3,8000,57,104.0,6.7,2500,112,98.7,6.2
+Male,"Antero-posterior diameter, horn core base",130000,52,114.9,7.0,120000,37,164.7,11.3,14000,41,105.6,11.5,8000,91,98.8,10.1,2500,142,83.4,7.6
+Male,"Least width of frontals, between horn cores and orbits",130000,22,293.7,7.0,120000,19,355.1,9.1,14000,25,314.7,6.2,8000,74,296.6,5.7,2500,135,271.1,4.7
+Male,Greatest width of frontals at orbits,130000,14,350.4,7.3,120000,13,407.8,6.6,14000,15,371.3,4.8,8000,64,348.0,4.8,2500,117,324.6,4.0
+Male,"M1-M3, inclusive alveolar length",130000,,,,120000,5,103.9,4.0,14000,2,105.6,0.5,8000,3,97.3,15.6,2500,22,90.6,4.8
+Male,"M3, maximum width, anterior cusp",130000,,,,120000,4,31.5,7.2,14000,2,29.8,0.9,8000,2,28.4,3.2,2500,22,27.7,5.9
+Male,"Distance, nuchal line to tip of premaxillae",130000,1,608.0,,120000,2,716.0,6.9,14000,1,629.0,,8000,25,564.3,4.4,2500,56,535.3,3.2
+Male,"Distance, nuchal line to nasal-frontal suture",130000,5,272.4,4.5,120000,10,326.7,6.3,14000,14,283.9,6.5,8000,57,259.5,4.7,2500,106,245.7,5.0
+Male,"Angle of divergence of horn cores, forward from sagittal",130000,21,70.8,5.7,120000,16,77.3,7.0,14000,22,79.2,6.1,8000,62,72.1,7.2,2500,124,67.7,6.6
+Male,Angle between foramen magnum and occipital planes,130000,25,133.2,6.7,120000,8,128.5,7.1,14000,17,125.4,5.3,8000,57,129.6,5.7,2500,115,133.8,5.6
+Male,Angle between foramen magnum and basioccipital planes,130000,26,117.2,5.0,120000,9,127.4,6.4,14000,17,115.6,6.1,8000,56,113.4,4.9,2500,115,110.5,4.5
+Female,"Spread of horn cores, tip to tip",130000,8,598.5,10.0,120000,1,1238.0,,14000,20,669.5,10.6,8000,13,614.4,8.4,2500,28,451.0,7.7
+Female,"Horn core length, upper curve, tip to burr",130000,8,208.9,12.8,120000,3,564.0,13.7,14000,26,202.9,12.8,8000,19,197.1,9.6,2500,34,124.1,14.1
+Female,"Straight line distance, tip to burr, dorsal horn core",130000,8,197.8,10.4,120000,2,563.0,14.3,14000,25,190.1,13.2,8000,16,182.9,7.7,2500,33,117.1,13.1
+Female,"Dorso-ventral diameter, horn core base",130000,10,63.4,7.1,120000,9,105.9,8.6,14000,26,66.5,9.1,8000,25,60.4,8.0,2500,37,51.2,7.5
+Female,"Minimum circumference, horn core base",130000,9,199.3,6.6,120000,3,324.9,8.1,14000,24,209.0,7.7,8000,24,191.5,7.0,2500,37,162.1,7.1
+Female,Width of occipital at auditory openings,130000,3,219.0,6.7,120000,3,260.3,9.0,14000,13,246.2,4.7,8000,11,217.3,3.7,2500,26,201.3,3.8
+Female,Width of occipital condyles,130000,4,121.8,6.5,120000,3,146.7,7.1,14000,13,133.2,6.9,8000,12,126.8,5.5,2500,27,115.7,4.0
+Female,"Depth, nuchal line to dorsal margin of foramen magnum",130000,3,91,2.9,120000,3,107.0,9.9,14000,11,100.7,6.1,8000,11,86.9,6.8,2500,26,84.6,7.0
+Female,"Antero-posterior diameter, horn core base",130000,10,64.0,7.5,120000,9,103.0,9.4,14000,26,65.8,8.3,8000,27,60.3,9.3,2500,38,51.5,7.6
+Female,"Least width of frontals, between horn cores and orbits",130000,10,228.5,4.7,120000,5,285.2,4.3,14000,21,262.8,6.0,8000,19,238.2,5.2,2500,27,216.7,4.0
+Female,Greatest width of frontals at orbits,130000,8,279.6,5.4,120000,2,331.0,1.7,14000,16,314.6,4.7,8000,12,292.3,3.7,2500,25,267.5,3.8
+Female,M1-M3. inclusive alveolar length,130000,,,,120000,1,106.0,,14000,6,96.2,2.5,8000,4,97.3,3.0,2500,2,82.0,10.3
+Female,"M3, maximum width, anterior cusp",130000,,,,120000,1,29.4,,14000,7,28.8,5.4,8000,4,24.3,10.8,2500,2,26.0,0.3
+Female,"Distance, nuchat line to tip of premaxillae",130000,,,,120000,,,,14000,4,577.0,1.9,8000,8,523.5,3.4,2500,19,484.7,2.8
+Female,"Distance, nuchal line to nasal-frontal suture",130000,4,234.5,3.4,120000,1,257.0,,14000,16,248.1,5.5,8000,15,227.3,6.0,2500,24,212.4,3.7
+Female,"Angle of divergence of horn cores, forward from sagittal",130000,10,71.2,8.8,120000,3,78.0,,14000,18,82.1,6.5,8000,15,75.0,5.9,2500,21,66.0,5.6
+Female,Angle between foramen magnum and occipital planes,130000,4,134.8,4.0,120000,1,124.0,,14000,10,123.8,3.8,8000,9,131.7,5.4,2500,24,131.8,5.5
+Female,Angle between foramen magnum and basioccipital planes,130000,4,110.3,5.7,120000,1,119.0,,14000,10,115.0,5.8,8000,9,110.2,4.9,2500,25,109.7,4.4
+Male,Humerus: Approximate rotational length of bone,130000,,,,120000,7,401.7,3.7,14000,1,339,,8000,39,356.9,5.9,2500,37,325.9,3.4
+Male,Humerus: Antero-posterior diameter of diaphysis,130000,,,,120000,14,79.8,4.9,14000,3,69.7,4.1,8000,41,66.4,6.8,2500,37,61.5,5.1
+Male,Humerus: Transverse minimum of diaphysis,130000,,,,120000,14,66.9,5.5,14000,3,58.7,0.9,8000,41,55.0,7.7,2500,37,50.6,6.2
+Male,Radius: Approximate rotational length of bone,130000,,,,120000,9,383.2,2.6,14000,4,343,2.2,8000,82,343.8,4.2,2500,57,320.5,2.8
+Male,Radius: Antero-posterior minimum of diaphysis,130000,,,,120000,11,45.5,5.9,14000,4,33.7,2.8,8000,83,35.5,5.9,2500,59,32.2,5.2
+Male,Radius: Transverse minimum of diaphysis,130000,,,,120000,11,75.6,5.7,14000,4,54.5,2.3,8000,83,58.5,5.6,2500,59,53.9,5.2
+Male,Metacarpal: Total length of bone,130000,,,,120000,16,248.6,3.3,14000,28,222,3,8000,139,219.8,3.9,2500,112,206.3,3.4
+Male,Metacarpal: Antero-posterior minimum of diaphysis,130000,,,,120000,19,36.3,5.9,14000,28,30.7,4,8000,143,30.1,6.0,2500,113,27.2,6.1
+Male,Metacarpal: Transverse minimum of diaphysis,130000,,,,120000,18,65.7,7.5,14000,28,52.3,6.6,8000,142,51.4,7.2,2500,113,45.4,7.5
+Male,Femur: Approximate rotational length of bone,130000,,,,120000,3,481.7,0.5,14000,4,429,3.2,8000,38,403.7,4.4,2500,39,380.7,2.7
+Male,Femur: Antero-posterior diameter of diaphysis,130000,,,,120000,5,65.8,5.2,14000,5,56.2,7.4,8000,40,50.0,6.5,2500,43,47.9,5.1
+Male,Femur: Transverse minimum of diaphysis,130000,,,,120000,5,63.0,3.0,14000,5,58.8,3.6,8000,40,49.3,4.7,2500,43,47.3,5.1
+Male,Tibia: Approximate rotational length of bone,130000,,,,120000,9,485.1,2.4,14000,9,412,3.5,8000,63,403.5,4.3,2500,42,371.9,2.7
+Male,Tibia: Antero-posterior minimum of diaphysis,130000,,,,120000,13,49.6,4.5,14000,12,42.5,6.9,8000,64,38.9,5.8,2500,43,34.7,4.2
+Male,Tibia: Transverse minimum of dia'physis,130000,,,,120000,13,68.4,5.0,14000,12,59,5.4,8000,64,53.5,5.6,2500,43,49.1,4.4
+Male,Metatarsal: Total length of bone,130000,,,,120000,19,303.6,2.2,14000,22,273.9,3,8000,150,270.3,3.7,2500,118,255.2,3.0
+Male,Metatarsal: Antero-posterior minimum of diaphysis,130000,,,,120000,19,40.9,4.1,14000,22,35.2,6.7,8000,161,33.1,5.5,2500,115,30.3,4.6
+Male,Metatarsal: Transverse minimum of diaphysis,130000,,,,120000,19,52.6,5.7,14000,22,40.9,6.7,8000,156,39.2,7.5,2500,115,35.3,5.4
+Female,Humerus: Approximate rotational length of bone,130000,,,,120000,1,345.0,,14000,9,343.5,4,8000,45,321.7,6.6,2500,25,286.3,3.0
+Female,Humerus: Antero-posterior diameter of diaphysis,130000,,,,120000,5,72.0,4.8,14000,10,62.9,6.7,8000,77,54.1,8.3,2500,25,49.8,4.6
+Female,Humerus: Transverse minimum of diaphysis,130000,,,,120000,5,57.2,5.2,14000,10,50.6,6.1,8000,76,44.5,8.2,2500,25,40.3,4.4
+Female,Radius: Approximate rotational length of bone,130000,,,,120000,5,359.2,2.5,14000,8,329,4.5,8000,121,315.2,5.2,2500,54,293.0,3.1
+Female,Radius: Antero-posterior minimum of diaphysis,130000,,,,120000,10,36.3,2.6,14000,8,32.8,10.7,8000,119,29.8,7.0,2500,56,26.4,6.2
+Female,Radius: Transverse minimum of diaphysis,130000,,,,120000,8,60.3,7.6,14000,8,51.1,11.2,8000,119,47.3,7.2,2500,56,43.1,5.8
+Female,Metacarpal: Total length of bone,130000,,,,120000,9,248.1,2.5,14000,40,219.5,3.1,8000,323,211.2,3.5,2500,164,198.9,3.4
+Female,Metacarpal: Antero-posterior minimum of diaphysis,130000,,,,120000,11,32.2,3.9,14000,40,28.6,5.5,8000,331,26.5,5.8,2500,163,24.0,6.7
+Female,Metacarpal: Transverse minimum of diaphysis,130000,,,,120000,11,52.6,5.7,14000,40,45,7.8,8000,331,40.3,7.3,2500,163,36.6,6.3
+Female,Femur: Approximate rotational length of bone,130000,,,,120000,3,428.7,3.7,14000,11,400.7,3.8,8000,28,367.6,4.6,2500,17,342.2,2.9
+Female,Femur: Antero-posterior diameter of diaphysis,130000,,,,120000,4,57.3,1.7,14000,14,49.9,4.3,8000,36,43.6,8.3,2500,18,41.2,5.8
+Female,Femur: Transverse minimum of diaphysis,130000,,,,120000,4,53.5,3.9,14000,14,51.1,5.7,8000,36,43.3,5.3,2500,18,41.5,6.0
+Female,Tibia: Approximate rotational length of bone,130000,,,,120000,2,409.5,0.2,14000,20,390.2,2.6,8000,71,362.2,5.2,2500,40,335.9,3.0
+Female,Tibia: Antero-posterior minimum of diaphysis,130000,,,,120000,3,41.3,1.4,14000,19,40.1,6.1,8000,75,33.5,6.4,2500,41,30.2,5.8
+Female,Tibia: Transverse minimum of diaphysis,130000,,,,120000,3,56.0,,14000,19,52.5,4.1,8000,75,46.1,6.6,2500,41,42.1,5.1
+Female,Metatarsal: Total length of bone,130000,,,,120000,3,285.3,1.7,14000,37,266,3.2,8000,297,259.9,3.6,2500,177,245.2,3.2
+Female,Metatarsal: Anteroposterior minimum of diaphysis,130000,,,,120000,4,36.5,3.5,14000,37,32.8,7.3,8000,297,30.2,6.2,2500,180,27.4,5.5
+Female,Metatarsal: Transverse minimum of diaphysis,130000,,,,120000,4,39.8,2.4,14000,37,35.4,9.5,8000,297,32.1,8.2,2500,180,29.3,6.7

@@ -1,0 +1,8 @@
+Line,Genspec,McF,McF_age,wgt_kg,N,P_M_mm,P_S_mm,E_M_mm,E_S_mm,H_M,H_S
+1,Hyracotherium borealis,1,-55.6,26.6,11,4.67,0.29,8.21,0.46,57.00,1.80
+1,Mesohippus bairdi,8,-31.8,42.2,14,8.36,0.40,11.89,0.55,70.40,3.20
+1,Merychippus paniensis,22,-15.7,100.6,13,34.08,2.01,19.96,1.06,170.70,7.40
+1,Neohipparion occidentale,28,-11,151.3,5,52.40,2.41,20.80,1.10,252.20,9.50
+2,Hyracotherium borealis,1,-55.6,26.6,11,4.67,0.29,8.21,0.46,57.00,1.80
+2,Mesohippus bairdi,8,-31.8,42.2,14,8.36,0.40,11.89,0.55,70.40,3.20
+2,Hypohippus osborni,17,-11,403,4,18.75,2.62,22.03,3.17,85.50,1.70
