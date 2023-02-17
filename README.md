@@ -4,11 +4,13 @@
 # roev: Rates of Evolution
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/benmarwick/roev/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/benmarwick/roev/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of roev is to provide functions for analysing and visualizing
-rates of evolution following the methods in Philip D. Gingerich’s book
-‘Rates of Evolution: A Quantitative Synthesis’
+rates of evolution following the methods in Philip D. Gingerich’s 2019
+book *Rates of Evolution: A Quantitative Synthesis*
 <https://doi.org/10.1017/9781316711644>. The R code and data files
 included here were originally deposited by Gingerich at Dryad
 <https://doi.org/10.5061/dryad.1tn7123> and adapted for use by Ben
@@ -23,12 +25,168 @@ if (!require("remotes")) install.packages("remotes")
 remotes::install_github("benmarwick/roev")
 ```
 
+## Simple example
+
+Here is a very simple example based on Gingerich’s case studies. To
+compute rates of evolution following Gingerich, we need a data frame
+that includes a time variable, a mean variable, a standard deviation
+variable, and a number of samples variable. Here’s some example data:
+
+| time |     mean |       sd |   n |
+|-----:|---------:|---------:|----:|
+|  700 | 3.40e-06 | 9.70e-06 |  29 |
+|  720 | 3.30e-06 | 1.17e-05 | 173 |
+|  740 | 4.20e-06 | 2.19e-05 | 182 |
+|  760 | 4.00e-06 | 1.38e-05 | 197 |
+|  780 | 4.50e-06 | 1.58e-05 | 190 |
+|  800 | 5.30e-06 | 2.02e-05 | 196 |
+|  820 | 7.40e-06 | 3.08e-05 | 239 |
+|  840 | 7.40e-06 | 2.93e-05 | 231 |
+|  860 | 9.10e-06 | 3.57e-05 | 250 |
+|  880 | 6.90e-06 | 2.40e-05 | 219 |
+|  900 | 6.30e-06 | 3.29e-05 | 219 |
+|  920 | 7.30e-06 | 4.96e-05 | 170 |
+|  940 | 6.80e-06 | 2.87e-05 | 177 |
+|  960 | 7.40e-06 | 3.26e-05 | 206 |
+|  980 | 9.90e-06 | 6.25e-05 | 203 |
+| 1000 | 8.80e-06 | 3.02e-05 | 206 |
+| 1020 | 1.18e-05 | 5.20e-05 | 302 |
+| 1040 | 1.40e-05 | 5.26e-05 | 317 |
+| 1060 | 1.41e-05 | 4.85e-05 | 343 |
+| 1080 | 1.59e-05 | 6.11e-05 | 331 |
+| 1100 | 1.72e-05 | 5.77e-05 | 370 |
+| 1120 | 1.64e-05 | 5.65e-05 | 443 |
+
+Next we prepare an empty matrix to hold the rates calculations. It’s
+important that the columns are in the order of time-mean-sd-n, and that
+these are the first four columns in the data frame. The column names are
+not important.
+
+``` r
+# our input data frame is called x
+
+n = length(x[,2])        # get the number of rows (measurements)
+nn = 0.5 * (n-1) * n     # get the number of pairwise comparisons
+
+idr = matrix(nrow = nn,
+             ncol = 9)   # create an empty matrix with 9 columns
+
+# set the column names of our empty matrix
+colnames(idr) = c('int',
+                  'diff.sd',
+                  'rate.sd',
+                  'log.i',
+                  'log.d',
+                  'log.r',
+                  'sbn',
+                  'wgt',
+                  'sum')
+```
+
+Next we loop over the input data to compute the rates of change and fill
+the matrix with the results. Here we are using the `PoolSD` function
+from the roev package, the rest is base R.
+
+``` r
+# populate the empty matrix with rate calculations
+nc = 0
+stdev <- numeric(length = n - 1)
+
+for (k in 1:(n - 1)){                           # run length
+  for (i in 1:(n - k)){                         # starting position
+    nc = nc + 1
+    idr[nc, 1] = k                                        # intercept
+    meandiff = x[(i + k), 2] - x[i, 2]              # mean diff.
+    poolsd = roev::PoolSD(x[i + k, 4], x[i, 4], x[i + k, 3], x[i, 3])
+    idr[nc, 2] = meandiff/poolsd                        # diff.sd
+    idr[nc, 3] = idr[nc, 2] / idr[nc, 1]            # rate.sd
+    idr[nc, 4] = log10(idr[nc, 1])                  # log.i
+    idr[nc, 5] = log10(abs(idr[nc, 2]))             # log.d
+    idr[nc, 6] = log10(abs(idr[nc, 3]))             # log.r
+    if(idr[nc, 1] == 1){idr[nc, 7] = 1} else {idr[nc, 7] = 3}   # sbn
+    idr[nc, 8] = 1 / idr[nc, 1]                         # wgt
+    idr[nc, 9] = idr[nc, 4] + idr[nc, 6]            # sum
+    stdev[i] = poolsd
+  }
+}
+
+idrx1 = idr[!rowSums(!is.finite(idr)), ]  # remove rows that have -Inf
+```
+
+Now we are ready to plot the Log rate versus log interval (LRI) analysis
+of the time series with circles representing rates for corresponding
+intervals. This is the distinctive plot in all of Gingerich’s case
+studies. It is important because it provides the output of the robust
+linear regressions, which can be used for interpreting if the rate of
+evolution is random, stationary or directional. The robust regression is
+computed using `rlm` from the MASS package. Confidence intervals for the
+slope and intercept are computed by bootstrapping, resulting in a stable
+median and a representative confidence interval.
+
+``` r
+
+plot(c(-5, 8),   # set up plot, some trial and error required here
+     c(-5, 8),              
+     type = 'n',
+     xaxt = 'n',
+     yaxt = 'n',
+     axes = FALSE,
+     ann = FALSE,
+     asp = 1)       # aspect ratio (y/x))
+
+bootresultd = roev::TriPanelBC(idrx1,     # idrx matrix
+                               "r",       # mode (diff/rate)
+                               -3,         # panel placement coordinate x
+                               3,         # panel placement coordinate y
+                               1000,      # number of bootstrap replications
+                               "all",     # 'mode' as "medians","all","mixed"
+                               2,         # circle size for points (1.5 or 2)
+                               "normal")  # 'equation' position as "normal","lower","none"
+```
+
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+``` r
+# extract some values to use inline in text about the plot
+
+slope_max <- round(bootresultd[[1]][1], 3)
+slope_med <- round(bootresultd[[1]][2], 3)
+slope_min <- round(bootresultd[[1]][3], 3)
+```
+
+In the example above, we see a median slope of -0.261, and a confidence
+interval for the slope of -0.425 to -0.116.
+
+Here’s the key to interpreting the LRI plot above (from Gingerich
+2019:109)
+
+- Random time series have differences that scale with a slope at or near
+  0.500 on a log difference versus log interval or LDI plot. The
+  corresponding rates scale with a slope at or near -0.500 on a log rate
+  versus log interval or LRI plot.
+
+- Stationary time series have differences that scale with a slope at or
+  near 0.000 on an LDI plot. The corresponding rates scale with a slope
+  at or near -1.000 on an LRI plot.
+
+- Directional time series have differences that scale with a slope at or
+  near 1.000 on an LDI plot. The corresponding rates scale with a slope
+  at or near 0.000 on an LRI plot.
+
+Thus for the example data above, the median slope lies between
+expectation for directional change and random change, and is
+significantly different from both. The more negative confidence limit
+excludes both -1.000 expected for stasis and -0.500 expected for a
+random time series, and the more positive limit excludes 0.000 expected
+for a directional time series. Thus the time series is interpreted as
+directional with a random component (cf. Gingerich 2019:142).
+
 ## Examples from ‘Rates of Evolution: A Quantitative Synthesis’
 
-Here are a few examples from Gingerich’s book. The code is almost
-exactly as he wrote it, taken from the Dryad repository for the book, I
-have only slightly simplified the code in a few places. Because of the
-distinctive way that Gingerich builds up the final plot with many
+Here are a few complete case studies from Gingerich’s book. The code is
+almost exactly as he wrote it, taken from the Dryad repository for the
+book, I have only slightly simplified the code in a few places. Because
+of the distinctive way that Gingerich builds up the final plot with many
 different base plot functions, all code has to be in one block to work
 correctly in an R Markdown document. His original code and data files
 for all the case studies in the book are included here in the `data-raw`
@@ -591,9 +749,6 @@ psize <- 1.5    #2
 #send (1)idrx matrix, (2)mode(diff/rate), (3)panel placement coordinate x,
 #  (4)panel placement coordinate y, (5)bootn, (6)mode, (7)psize, (8)equation
 bootresultd = TriPanelBC(idrcA, "r", 1, 4.5, bootn, mode, psize, "lower")
-#> [1] 1000
-#> [1]    0.46078688    0.02722750   -0.39133647   -0.08129192   -0.20895490
-#> [6]   -0.34607431 1000.00000000
 wrlb.d = bootresultd[[1]]
 bootmat.d = bootresultd[[2]]
 
@@ -602,9 +757,6 @@ bootmat.d = bootresultd[[2]]
 #send idrx matrix, n, mode(diff/rate), panel placement coordinates, mode
 idrcG = rbind(idrcW, idrcT, idrcB)
 bootresultr = TriPanelBC(idrcG, "r", 13, 4.5, bootn, mode, psize, "lower")
-#> [1] 1000
-#> [1]    0.5061764   -0.2272688   -0.9930333   -0.2485510   -0.3778759
-#> [6]   -0.5085221 1000.0000000
 wrlb.r = bootresultr[[1]]
 bootmat.r = bootresultr[[2]]
 
@@ -631,7 +783,7 @@ text(
 )
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
 
 The original caption for this plot in the book is “Size change in the
 snow goose Anser caerulescens studied at La Pérouse Bay, Manitoba, from
@@ -1124,7 +1276,6 @@ psize <- 1.2    #1.5/2
 #  (4)panel placement coordinate y, (5)bootn, (6)mode, (7)psize, (8)equation
 #  (9) vadd or 'vertical addition' to position of points on plot
 bootresultd = PalPanelBC(idrx[, 1:8], "d", 1, 4.5, bootn, mode, psize, "normal", 0)
-#> [1] 1000
 
 #====== Plot LRI panel (c)
 
@@ -1132,9 +1283,7 @@ bootresultd = PalPanelBC(idrx[, 1:8], "d", 1, 4.5, bootn, mode, psize, "normal",
 bootresultr = PalPanelBC(idrx[, 1:8], "r", 13, 4.5, bootn, mode, psize, "normal", 0)
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
-
-    #> [1] 1000
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
 
 Here is the original caption for this figure from the book: “Rates of
 evolution in two Miocene merycoidodont mammal lineages spanning five
@@ -1152,3 +1301,10 @@ significantly different from expectations for both random and
 directional change. Intercepts in (b) and (c) are the same; both have
 wide 95% confidence intervals approaching a span of two orders of
 magnitude (open triangles).”
+
+## Code of Conduct
+
+Please note that the roev project is released with a [Contributor Code
+of
+Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.

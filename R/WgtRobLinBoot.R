@@ -24,7 +24,7 @@ for (b in 1:bootn){
 	bootmat[bootcount,1]=WgtRobLinFit(simat)[1]
 	bootmat[bootcount,2]=WgtRobLinFit(simat)[2]
 }
-print(bootcount)
+# print(bootcount)
 bootmats1=sort(bootmat[,1])	#slopes
 bootmats2=sort(bootmat[,2])	#intercepts
 wrlb[1]=bootmats1[boot975]
