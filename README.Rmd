@@ -16,10 +16,12 @@ knitr::opts_chunk$set(
 # roev: Rates of Evolution
 
 <!-- badges: start -->
+
 [![R-CMD-check](https://github.com/benmarwick/roev/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/benmarwick/roev/actions/workflows/R-CMD-check.yaml)
+
 <!-- badges: end -->
 
-The goal of roev is to provide functions for analysing and visualizing rates of evolution following the methods in Philip D. Gingerich's 2019 book _Rates of Evolution: A Quantitative Synthesis_ <https://doi.org/10.1017/9781316711644>. The R code and data files included here were originally deposited by Gingerich at Dryad <https://doi.org/10.5061/dryad.1tn7123> and adapted for use by Ben Marwick.
+The goal of roev is to provide functions for analysing and visualizing rates of evolution following the methods in Philip D. Gingerich's 2019 book *Rates of Evolution: A Quantitative Synthesis* <https://doi.org/10.1017/9781316711644>. The R code and data files included here were originally deposited by Gingerich at Dryad <https://doi.org/10.5061/dryad.1tn7123> and adapted for use by Ben Marwick.
 
 ## Installation
 
@@ -32,7 +34,7 @@ remotes::install_github("benmarwick/roev")
 
 ## Simple example
 
-Here is a very simple example based on Gingerich's case studies. To compute rates of evolution following Gingerich, we need a data frame that includes a time variable, a mean variable, a standard deviation variable, and a number of samples variable. Here's some example data: 
+Here is a very simple example based on Gingerich's case studies. To compute rates of evolution following Gingerich, we need a data frame that includes a time variable, a mean variable, a standard deviation variable, and a number of samples variable. Here's some example data:
 
 ```{r echo=FALSE}
 x <- 
@@ -63,13 +65,15 @@ structure(list(time = c(700L, 720L, 740L, 760L, 780L, 800L,
 knitr::kable(x)
 ```
 
-Next we prepare our data for analysis of rates. It's important that the first four columns of our input data are in the order of time-mean-sd-n. The column names are not important, but it is important that these are the first four columns in the data frame.  
+Next we prepare our data for analysis of rates. It's important that the first four columns of our input data are in the order of time-mean-sd-n. The column names are not important, but it is important that these are the first four columns in the data frame.
 
 ```{r}
+# first four cols of the input data frame 
+# must be time-mean-sd-n, in that order
 idrx1 <- roev::DataPrep(x)
 ```
 
-Now we are ready to plot the Log rate versus log interval (LRI) analysis of the time series with circles representing rates for corresponding intervals. This is the distinctive plot in all of Gingerich's case studies. It is important because it provides the output of the robust linear regressions. It's the slope on these regressions that allows us to determine if the rate of evolution is random, stationary or directional. Confidence intervals for the slope and intercept are computed by bootstrapping, resulting in a stable median and a representative confidence interval. 
+Now we are ready to plot the Log rate versus log interval (LRI) analysis of the time series with circles representing rates for corresponding intervals. This is the distinctive plot in all of Gingerich's case studies. It is important because it provides the output of the robust linear regressions. It's the slope on these regressions that allows us to determine if the rate of evolution is random, stationary or directional. Confidence intervals for the slope and intercept are computed by bootstrapping, resulting in a stable median and a representative confidence interval.
 
 ```{r fig.width=8, fig.height=8}
 
@@ -91,8 +95,7 @@ bootresultd = roev::TriPanelBC(idrx1,     # idrx matrix
                                2,         # circle size for points (1.5 or 2)
                                "normal")  # 'equation' position as "normal","lower","none"
                                  
-```      
-
+```
 
 ```{r}
 # extract some values to use inline in text about the plot
@@ -102,16 +105,15 @@ slope_med <- round(bootresultd[[1]][2], 3)
 slope_min <- round(bootresultd[[1]][3], 3)
 ```
 
-
-In the example above, we see a median slope of `r slope_med`, and a confidence interval for the slope of `r slope_min` to `r slope_max`. 
+In the example above, we see a median slope of `r slope_med`, and a confidence interval for the slope of `r slope_min` to `r slope_max`.
 
 Here's the key to interpreting the LRI plot above (from Gingerich 2019:109)
 
-- Random time series have differences that scale with a slope at or near 0.500 on a log difference versus log interval or LDI plot. The corresponding rates scale with a slope at or near -0.500 on a log rate versus log interval or LRI plot.
+-   **Random** time series have differences that scale with a slope at or near 0.500 on a log difference versus log interval or LDI plot. The corresponding rates scale with a slope at or near -0.500 on a log rate versus log interval or LRI plot.
 
-- Stationary time series have differences that scale with a slope at or near 0.000 on an LDI plot. The corresponding rates scale with a slope at or near -1.000 on an LRI plot.
+-   **Stationary** time series have differences that scale with a slope at or near 0.000 on an LDI plot. The corresponding rates scale with a slope at or near -1.000 on an LRI plot.
 
-- Directional time series have differences that scale with a slope at or near 1.000 on an LDI plot. The corresponding rates scale with a slope at or near 0.000 on an LRI plot.
+-   **Directional** time series have differences that scale with a slope at or near 1.000 on an LDI plot. The corresponding rates scale with a slope at or near 0.000 on an LRI plot.
 
 Thus for the example data above, the median slope lies between expectation for directional change and random change, and is significantly different from both. The more negative confidence limit excludes both -1.000 expected for stasis and -0.500 expected for a random time series, and the more positive limit excludes 0.000 expected for a directional time series. Thus the time series is interpreted as directional with a random component (cf. Gingerich 2019:142).
 
@@ -121,17 +123,17 @@ Here are a few complete case studies from Gingerich's book. The code is almost e
 
 ### Example using a Field Study: Size of Snow Geese at La Pérouse Bay, Manitoba
 
-This is an example showing how to use this package with Gingerich's R code for his case study of Size of Snow Geese at La Pérouse Bay, Manitoba, which is described in section 8.1.12 of 'Rates of Evolution: A Quantitative Synthesis' which is about Phenotypic Change Documented in Field Studies. Here is Gingerich's text from this section: 
+This is an example showing how to use this package with Gingerich's R code for his case study of Size of Snow Geese at La Pérouse Bay, Manitoba, which is described in section 8.1.12 of 'Rates of Evolution: A Quantitative Synthesis' which is about Phenotypic Change Documented in Field Studies. Here is Gingerich's text from this section:
 
 > The snow goose, Anser caerulescens, is a North American species that nests in the Canadian Arctic and winters in the southern United States and Mexico. Snow geese were studied intensively by Fred Cooke and colleagues at La Pérouse Bay, an inlet on Hudson Bay, in northern Manitoba (Cooke et al., 1995). In an earlier report from this project, Cooch et al. (1991) documented a significant decrease in adult female body weight over time, and a parallel decrease in gosling body weight, tarsus length, and bill length (the Cooch et al. figures are reprinted in Cooke et al., 1995). In the earlier report Cooch et al. attributed the decreases in size to overexploitation of food resources at La Pérouse Bay, but the decline could also be an evolutionary response to global warming or some other environmental change.
 
-> The 17-year decline in the adult female body weight of snow geese shown by Cooke et al. (1995) is illustrated in Figure 8.2a. The generation time for A. caerulescens is about five years (Niel and Lebreton 2005, table 2). Thus the 17-year interval represents a total of about 3.4 generations. The Figure 8.2a time series yields a total of 91 rates on timescales in the range of a full generation to 3.4 generations. These have an LRI slope of 0.027 (Figure 8.2b), with a 95% confidence interval excluding the slopes of -1.000 and -0.500 expected for stasis and random change, respectively, affirming Cooke et al.’s interpretation of the decline as both directional and significant. The time series in Figure 8.2a yields 17 step rates that range from h0 = 0.015 to h0 = 0.772 standard deviations per generation (median 0.436) on a timescale of one generation.
+> The 17-year decline in the adult female body weight of snow geese shown by Cooke et al. (1995) is illustrated in Figure 8.2a. The generation time for A. caerulescens is about five years (Niel and Lebreton 2005, table 2). Thus the 17-year interval represents a total of about 3.4 generations. The Figure 8.2a time series yields a total of 91 rates on timescales in the range of a full generation to 3.4 generations. These have an LRI slope of 0.027 (Figure 8.2b), with a 95% confidence interval excluding the slopes of -1.000 and -0.500 expected for stasis and random change, respectively, affirming Cooke et al.'s interpretation of the decline as both directional and significant. The time series in Figure 8.2a yields 17 step rates that range from h0 = 0.015 to h0 = 0.772 standard deviations per generation (median 0.436) on a timescale of one generation.
 
 > The three Cooke et al. (1995) time series for gosling weight, gosling tarsus length, and gosling beak length are shorter, spanning 12, 10, and 12 years, respectively, equivalent to 2.4, 2.0, and 2.4 generations. Note that the sample ranges for gosling tarsus length and gosling beak length given by Cooke et al. (1995, figures 1b and 1c) span +/-1 standard deviation and not +/-1 standard error. Taken together the gosling weight, tarsus length, and beak length time series yield 93 rates in the range of a full generation to 3.4 generations. The LRI slope for all together is -0.227, lying between expectations for random and directional time series. The 95% confidence interval excludes only stasis. Step rates for gosling weight, tarsus length, and beak length range from h0 = 0.003 to h0 = 1.663 standard deviations per generation (median 0.398) on a timescale of one generation.
 
 > Change in the weights of snow goose eggs is also of interest (Cooke et al., 1995, p. 223). The time series is not long enough to constrain any interpretation of directional change, random change, or stasis, but the egg weights yield 13 step rates that range from h0 = 0.008 to h0 = 0.493 standard deviations per generation (median 0.222) on a timescale of one generation. Median rates for egg weight are lower than medians for adult female body weight and for gosling weight, tarsus length, and bill length.
 
-Here is his code: 
+Here is his code:
 
 ```{r example}
 library(roev)
@@ -654,14 +656,13 @@ The original caption for this plot in the book is "Size change in the snow goose
 
 ### Example using the Fossil Record: Miocene Merycoidodontidae
 
-This is an example showing how to use this package with Gingerich's R code for his case study of _Miocene Merycoidodontidae_, which is described in section  9.2.5 of 'Rates of Evolution: A Quantitative Synthesis' which is about Phenotypic Change in the Fossil Record. Here is Gingerich's text from this section:
+This is an example showing how to use this package with Gingerich's R code for his case study of *Miocene Merycoidodontidae*, which is described in section 9.2.5 of 'Rates of Evolution: A Quantitative Synthesis' which is about Phenotypic Change in the Fossil Record. Here is Gingerich's text from this section:
 
 > Merycoidodontidae are oreodonts, extinct ruminating pig-like artiodactyls that are now extinct. Oreodonts were a major constituent of mammalian faunas in North America during the Oligocene and Miocene epochs. In 1954 Robert Smith Bader completed a doctoral dissertation on variation and evolutionary rates in Miocene oreodonts. In the following publication Bader (1955) focused on two common forms: (1) smaller and more lightly built Merychyinae including the species of the genus Merychyus; and (2) larger and more heavily built Merycochoerinae includ- ing species of the genera Merycochoerus and Brachycrus.
 
-> Bader (1955) published statistics for 23 measurements of skulls for five species of Merychyinae and five species of Merycochoerinae. Statistics for one of the measurements, length of the upper molar tooth row, are shown graphically in Figure 9.2 to illustrate the merycoidodont lineages analyzed here. Each lineage has four species. Bader showed each lineage to have a fifth species branching from it, but the branching species are closely similar to a contemporaneous congener and are omitted here. The geological age for each species follows Hilgen et al. (2012, figure 29.9). Generation times of five years for Merychyus and eight years for Merycochoerus are estimated here (Equation 3.2) from body weights of 41–42 and 275–309 kg, respectively, taken from Janis (1990, table 13.4).
+> Bader (1955) published statistics for 23 measurements of skulls for five species of Merychyinae and five species of Merycochoerinae. Statistics for one of the measurements, length of the upper molar tooth row, are shown graphically in Figure 9.2 to illustrate the merycoidodont lineages analyzed here. Each lineage has four species. Bader showed each lineage to have a fifth species branching from it, but the branching species are closely similar to a contemporaneous congener and are omitted here. The geological age for each species follows Hilgen et al. (2012, figure 29.9). Generation times of five years for Merychyus and eight years for Merycochoerus are estimated here (Equation 3.2) from body weights of 41--42 and 275--309 kg, respectively, taken from Janis (1990, table 13.4).
 
-> Bader’s measurements yield a total of 191 rates, all nonzero. Ninety-seven of these are base rates that range from h5.602 = 1.65 x 10^-7 to h5.097 = 7.06 x 10^-5 standard deviations per generation (median 5.99 x 10^-6) on timescales of hundreds of thousands of generations.
-
+> Bader's measurements yield a total of 191 rates, all nonzero. Ninety-seven of these are base rates that range from h5.602 = 1.65 x 10\^-7 to h5.097 = 7.06 x 10\^-5 standard deviations per generation (median 5.99 x 10\^-6) on timescales of hundreds of thousands of generations.
 
 ```{r}
 #====Load file
@@ -677,7 +678,6 @@ B <- read.csv(
 
 head(B)
 ```
-
 
 ```{r fig.height=10, fig.width=10}
 xr <- c(0, 20)
@@ -1084,5 +1084,5 @@ bootresultr = PalPanelBC(idrx[, 1:8], "r", 13, 4.5, bootn, mode, psize, "normal"
 Here is the original caption for this figure from the book: "Rates of evolution in two Miocene merycoidodont mammal lineages spanning five million years of geological time. (a) Time-calibrated stratophenetic graph of species in the lineages analyzed by Bader (1955). Independent variable, time, is plotted on the vertical or y axis. The base of each normal curve spans +/-3 standard deviations. (b) Log-difference-interval LDI plot for 23 measurements showing that differences between species scale with a slope (0.086) close to that expected for a stationary time series (0.000). The slope is significantly different from expectation for both random and directional change. (c) Log-rate-interval LRI plot shows that rates of change scale with a slope (-0.914) close to that expected for a stationary time series (-1.000). This slope too is significantly different from expectations for both random and directional change. Intercepts in (b) and (c) are the same; both have wide 95% confidence intervals approaching a span of two orders of magnitude (open triangles)."
 
 ## Code of Conduct
-  
-  Please note that the roev project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+
+Please note that the roev project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

@@ -6,6 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/benmarwick/roev/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/benmarwick/roev/actions/workflows/R-CMD-check.yaml)
+
 <!-- badges: end -->
 
 The goal of roev is to provide functions for analysing and visualizing
@@ -63,6 +64,8 @@ time-mean-sd-n. The column names are not important, but it is important
 that these are the first four columns in the data frame.
 
 ``` r
+# first four cols of the input data frame 
+# must be time-mean-sd-n, in that order
 idrx1 <- roev::DataPrep(x)
 ```
 
@@ -107,24 +110,24 @@ slope_med <- round(bootresultd[[1]][2], 3)
 slope_min <- round(bootresultd[[1]][3], 3)
 ```
 
-In the example above, we see a median slope of -0.262, and a confidence
-interval for the slope of -0.43 to -0.118.
+In the example above, we see a median slope of -0.261, and a confidence
+interval for the slope of -0.422 to -0.123.
 
 Here’s the key to interpreting the LRI plot above (from Gingerich
 2019:109)
 
-- Random time series have differences that scale with a slope at or near
-  0.500 on a log difference versus log interval or LDI plot. The
+- **Random** time series have differences that scale with a slope at or
+  near 0.500 on a log difference versus log interval or LDI plot. The
   corresponding rates scale with a slope at or near -0.500 on a log rate
   versus log interval or LRI plot.
 
-- Stationary time series have differences that scale with a slope at or
-  near 0.000 on an LDI plot. The corresponding rates scale with a slope
-  at or near -1.000 on an LRI plot.
+- **Stationary** time series have differences that scale with a slope at
+  or near 0.000 on an LDI plot. The corresponding rates scale with a
+  slope at or near -1.000 on an LRI plot.
 
-- Directional time series have differences that scale with a slope at or
-  near 1.000 on an LDI plot. The corresponding rates scale with a slope
-  at or near 0.000 on an LRI plot.
+- **Directional** time series have differences that scale with a slope
+  at or near 1.000 on an LDI plot. The corresponding rates scale with a
+  slope at or near 0.000 on an LRI plot.
 
 Thus for the example data above, the median slope lies between
 expectation for directional change and random change, and is
