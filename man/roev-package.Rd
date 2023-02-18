@@ -8,6 +8,14 @@
 \description{
 Functions written by Philip D. Gingerich to accompany his book 'Rates of Evolution: A Quantitative Synthesis' \url{https://doi.org/10.1017/9781316711644} Originally deposited by at Gingerich https://doi.org/10.5061/dryad.1tn7123 and adapted for use by Ben Marwick.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/benmarwick/roev}
+  \item Report bugs at \url{https://github.com/benmarwick/roev/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Ben Marwick \email{benmarwick@gmail.com} (\href{https://orcid.org/0000-0001-7879-4531}{ORCID})
 

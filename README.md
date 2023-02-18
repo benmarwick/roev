@@ -57,76 +57,29 @@ variable, and a number of samples variable. Here’s some example data:
 | 1100 | 1.72e-05 | 5.77e-05 | 370 |
 | 1120 | 1.64e-05 | 5.65e-05 | 443 |
 
-Next we prepare an empty matrix to hold the rates calculations. It’s
-important that the columns are in the order of time-mean-sd-n, and that
-these are the first four columns in the data frame. The column names are
-not important.
+Next we prepare our data for analysis of rates. It’s important that the
+first four columns of our input data are in the order of
+time-mean-sd-n. The column names are not important, but it is important
+that these are the first four columns in the data frame.
 
 ``` r
-# our input data frame is called x
-
-n = length(x[,2])        # get the number of rows (measurements)
-nn = 0.5 * (n-1) * n     # get the number of pairwise comparisons
-
-idr = matrix(nrow = nn,
-             ncol = 9)   # create an empty matrix with 9 columns
-
-# set the column names of our empty matrix
-colnames(idr) = c('int',
-                  'diff.sd',
-                  'rate.sd',
-                  'log.i',
-                  'log.d',
-                  'log.r',
-                  'sbn',
-                  'wgt',
-                  'sum')
-```
-
-Next we loop over the input data to compute the rates of change and fill
-the matrix with the results. Here we are using the `PoolSD` function
-from the roev package, the rest is base R.
-
-``` r
-# populate the empty matrix with rate calculations
-nc = 0
-stdev <- numeric(length = n - 1)
-
-for (k in 1:(n - 1)){                           # run length
-  for (i in 1:(n - k)){                         # starting position
-    nc = nc + 1
-    idr[nc, 1] = k                                        # intercept
-    meandiff = x[(i + k), 2] - x[i, 2]              # mean diff.
-    poolsd = roev::PoolSD(x[i + k, 4], x[i, 4], x[i + k, 3], x[i, 3])
-    idr[nc, 2] = meandiff/poolsd                        # diff.sd
-    idr[nc, 3] = idr[nc, 2] / idr[nc, 1]            # rate.sd
-    idr[nc, 4] = log10(idr[nc, 1])                  # log.i
-    idr[nc, 5] = log10(abs(idr[nc, 2]))             # log.d
-    idr[nc, 6] = log10(abs(idr[nc, 3]))             # log.r
-    if(idr[nc, 1] == 1){idr[nc, 7] = 1} else {idr[nc, 7] = 3}   # sbn
-    idr[nc, 8] = 1 / idr[nc, 1]                         # wgt
-    idr[nc, 9] = idr[nc, 4] + idr[nc, 6]            # sum
-    stdev[i] = poolsd
-  }
-}
-
-idrx1 = idr[!rowSums(!is.finite(idr)), ]  # remove rows that have -Inf
+idrx1 <- roev::DataPrep(x)
 ```
 
 Now we are ready to plot the Log rate versus log interval (LRI) analysis
 of the time series with circles representing rates for corresponding
 intervals. This is the distinctive plot in all of Gingerich’s case
 studies. It is important because it provides the output of the robust
-linear regressions, which can be used for interpreting if the rate of
-evolution is random, stationary or directional. The robust regression is
-computed using `rlm` from the MASS package. Confidence intervals for the
-slope and intercept are computed by bootstrapping, resulting in a stable
-median and a representative confidence interval.
+linear regressions. It’s the slope on these regressions that allows us
+to determine if the rate of evolution is random, stationary or
+directional. Confidence intervals for the slope and intercept are
+computed by bootstrapping, resulting in a stable median and a
+representative confidence interval.
 
 ``` r
 
-plot(c(-5, 8),   # set up plot, some trial and error required here
-     c(-5, 8),              
+plot(c(-5, 8),   # set up plot 
+     c(-5, 8),   # some trial and error required here       
      type = 'n',
      xaxt = 'n',
      yaxt = 'n',
@@ -136,7 +89,7 @@ plot(c(-5, 8),   # set up plot, some trial and error required here
 
 bootresultd = roev::TriPanelBC(idrx1,     # idrx matrix
                                "r",       # mode (diff/rate)
-                               -3,         # panel placement coordinate x
+                               -3,        # panel placement coordinate x
                                3,         # panel placement coordinate y
                                1000,      # number of bootstrap replications
                                "all",     # 'mode' as "medians","all","mixed"
@@ -144,7 +97,7 @@ bootresultd = roev::TriPanelBC(idrx1,     # idrx matrix
                                "normal")  # 'equation' position as "normal","lower","none"
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 ``` r
 # extract some values to use inline in text about the plot
@@ -154,8 +107,8 @@ slope_med <- round(bootresultd[[1]][2], 3)
 slope_min <- round(bootresultd[[1]][3], 3)
 ```
 
-In the example above, we see a median slope of -0.261, and a confidence
-interval for the slope of -0.425 to -0.116.
+In the example above, we see a median slope of -0.262, and a confidence
+interval for the slope of -0.43 to -0.118.
 
 Here’s the key to interpreting the LRI plot above (from Gingerich
 2019:109)
@@ -783,7 +736,7 @@ text(
 )
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
 
 The original caption for this plot in the book is “Size change in the
 snow goose Anser caerulescens studied at La Pérouse Bay, Manitoba, from
@@ -1283,7 +1236,7 @@ bootresultd = PalPanelBC(idrx[, 1:8], "d", 1, 4.5, bootn, mode, psize, "normal",
 bootresultr = PalPanelBC(idrx[, 1:8], "r", 13, 4.5, bootn, mode, psize, "normal", 0)
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
 
 Here is the original caption for this figure from the book: “Rates of
 evolution in two Miocene merycoidodont mammal lineages spanning five
