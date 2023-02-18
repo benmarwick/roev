@@ -25,7 +25,9 @@ TriPanelBC <- function(idrx,
                        mode,
                        psize,
                        equation) {
-  idrx[1:3, ]	#idrx is int. diff. rate matrix with -Inf rows removed
+  #idrx is int. diff. rate matrix with -Inf rows removed
+  # sometimes a little jitter may help, e.g. apply(idrx, 2, jitter, amount = 0.001)
+
   for (i in 1:ncol(idrx)) {
     idrx[, i] = rev(idrx[, i])
   }

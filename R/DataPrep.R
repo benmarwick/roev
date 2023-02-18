@@ -10,12 +10,12 @@
 #' # DataPrep()
 
 
-
 DataPrep <- function(x){
 
   # our input data frame is called x
+  x <- data.frame(x) # in case we are starting with a tibble
 
-  n = length(x[,2])        # get the number of rows (measurements)
+  n = nrow(x)        # get the number of rows (measurements)
   nn = 0.5 * (n-1) * n     # get the number of pairwise comparisons
 
   idr = matrix(nrow = nn,
