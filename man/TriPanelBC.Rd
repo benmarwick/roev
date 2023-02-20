@@ -4,24 +4,24 @@
 \alias{TriPanelBC}
 \title{An ROEV Function}
 \usage{
-TriPanelBC(idrx, dr, xac, yac, bootn, mode, psize, equation)
+TriPanelBC(idrx, dr = "r", xac, yac, bootn = 1000, mode, psize = 2, equation)
 }
 \arguments{
-\item{idrx}{matrix with -Inf removed, n, diff or rate, xac, yac}
+\item{idrx}{matrix input data}
 
-\item{dr}{something}
+\item{dr}{character; mode, "d" for difference (LDI) or "r" for rate (LRI), default is "r"}
 
-\item{xac}{something}
+\item{xac}{integer; panel placement coordinate x}
 
-\item{yac}{something}
+\item{yac}{integer; panel placement coordinate y}
 
-\item{bootn}{something}
+\item{bootn}{integer; umber of bootstrap replications, default is 1000}
 
-\item{mode}{something}
+\item{mode}{character; as in "medians","all","mixed"}
 
-\item{psize}{something}
+\item{psize}{integer; circle size for points, default is 2}
 
-\item{equation}{something}
+\item{equation}{character; position as "normal","lower","none"}
 }
 \description{
 TriPanel B or C, drawing and analyzing LDI or LRI temporal scaling

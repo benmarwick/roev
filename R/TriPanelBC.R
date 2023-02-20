@@ -2,14 +2,14 @@
 #'
 #' TriPanel B or C, drawing and analyzing LDI or LRI temporal scaling
 #'
-#' @param dr something
-#' @param xac something
-#' @param yac something
-#' @param bootn something
-#' @param mode something
-#' @param psize something
-#' @param equation something
-#' @param idrx matrix with -Inf removed, n, diff or rate, xac, yac
+#' @param dr character; mode, "d" for difference (LDI) or "r" for rate (LRI), default is "r"
+#' @param xac integer; panel placement coordinate x
+#' @param yac integer; panel placement coordinate y
+#' @param bootn integer; umber of bootstrap replications, default is 1000
+#' @param mode character; as in "medians","all","mixed"
+#' @param psize integer; circle size for points, default is 2
+#' @param equation character; position as "normal","lower","none"
+#' @param idrx matrix input data
 #'
 #' @keywords LDI LRI
 #' @export
@@ -18,14 +18,15 @@
 
 
 TriPanelBC <- function(idrx,
-                       dr,
+                       dr = "r",
                        xac,
                        yac,
-                       bootn,
+                       bootn = 1000,
                        mode,
-                       psize,
+                       psize = 2,
                        equation) {
-  #idrx is int. diff. rate matrix with -Inf rows removed
+
+  # idrx is int. diff. rate matrix with -Inf rows removed
   # sometimes a little jitter may help, e.g. apply(idrx, 2, jitter, amount = 0.001)
 
   for (i in 1:ncol(idrx)) {

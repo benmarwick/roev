@@ -10,7 +10,7 @@ DataPrep(x)
 \item{x}{data frame where the first four columns are time-mean-sd-n. The column names are not important, but the order of columns is.}
 }
 \description{
-Prepare matrix with columns for Generation, Time step, Number of samples, Mean, Stdev, Ln Mean, Ln Stdev. Read to input into \code{TriPanelBC()}
+Prepare matrix with columns for Generation, Time step, Number of samples, Mean, Stdev, Ln Mean, Ln Stdev. Output from this function is ready to input into \code{TriPanelBC()}
 }
 \examples{
 # DataPrep()
