@@ -110,8 +110,8 @@ slope_med <- round(bootresultd[[1]][2], 3)
 slope_min <- round(bootresultd[[1]][3], 3)
 ```
 
-In the example above, we see a median slope of -0.261, and a confidence
-interval for the slope of -0.422 to -0.123.
+In the example above, we see a median slope of -0.264, and a confidence
+interval for the slope of -0.423 to -0.119.
 
 Here’s the key to interpreting the LRI plot above (from Gingerich
 2019:109)
@@ -136,6 +136,62 @@ excludes both -1.000 expected for stasis and -0.500 expected for a
 random time series, and the more positive limit excludes 0.000 expected
 for a directional time series. Thus the time series is interpreted as
 directional with a random component (cf. Gingerich 2019:142).
+
+Here’s a plot the summarises the slopes from the above analysis, and
+includes some guide to interpreting the output:
+
+``` r
+library(ggbeeswarm)
+#> Loading required package: ggplot2
+
+ggplot(data.frame(bootresultd[[2]])) +
+  aes(0.25, 
+      slope) +
+  geom_boxplot() +
+  geom_quasirandom(alpha = 0.1) +
+  annotate("segment",
+           y =     slope_max,
+           yend =  slope_max,
+           x = 0,
+           xend = 0.5,
+           colour = "red") +
+    annotate("segment",
+           y =     slope_min,
+           yend =  slope_min,
+           x =    0,
+           xend = 0.5,
+           colour = "red") +
+    annotate("text",
+           x = -0.5,
+           y =  0,
+           label = "Directional\n(slope at or near 0)") +
+    annotate("text",
+           x = -0.5,
+           y = -0.5,
+           label = "Random\n(slope at or near -0.5)") +
+    annotate("text",
+           x = -0.5,
+           y = -1,
+           label = "Stationary\n(slope at or near -1)") +
+  theme_minimal() +
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.title.x = element_blank()) +
+  scale_x_continuous(limits = c(-0.8, 1)) +
+  scale_y_continuous(limits = c(-1.5, 0.5))
+```
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+
+In the figure above we see the distribution of all slopes from the LRI
+plot. The boxplot shows the median slope, the red lines show the minimum
+and maximum values for the confidence interval of the slope
+distribution. On the left of the panel are text labels to assist with
+the interpretation of the slope distribution. In the example above, we
+see the distribution of slope values ranges between 0 and -0.5, with the
+CI excluding -0.5 (the lower red line is at -0.423) which can be
+interpreted as a time series that is directional with a random
+component.
 
 ## Examples from ‘Rates of Evolution: A Quantitative Synthesis’
 
@@ -496,7 +552,7 @@ for (k in 1:(n - 1)) {
       idr[nc, 1] = k / gentime
     }   #interval
     meandiff = LA[(i + k), 6] - LA[i, 6]                                    #mean diff.
-    poolsd = PoolSD(LA[i + k, 3], LA[i, 3], LA[i + k, 7], LA[i, 7])         #n1,n2,sd1,sd2
+    poolsd = roev::PoolSD(LA[i + k, 3], LA[i, 3], LA[i + k, 7], LA[i, 7])       #n1,n2,sd1,sd2
     idr[nc, 2] = meandiff / poolsd                                          #diff.sd
     idr[nc, 3] = abs(idr[nc, 2]) / idr[nc, 1]                           #rate.sd.gen
     idr[nc, 4] = log10(idr[nc, 1])                                      #log.i
@@ -545,7 +601,7 @@ for (k in 1:(n - 1)) {
       idr[nc, 1] = k / gentime
     }   #interval
     meandiff = LW[(i + k), 6] - LW[i, 6]                    #mean diff.
-    poolsd = PoolSD(LW[i + k, 3], LW[i, 3], LW[i + k, 7], LW[i, 7]) #n1,n2,sd1,sd2
+    poolsd = roev::PoolSD(LW[i + k, 3], LW[i, 3], LW[i + k, 7], LW[i, 7])   #n1,n2,sd1,sd2
     idr[nc, 2] = meandiff / poolsd                      #diff.sd
     idr[nc, 3] = abs(idr[nc, 2]) / idr[nc, 1]               #rate.sd.gen
     idr[nc, 4] = log10(idr[nc, 1])                  #log.i
@@ -594,7 +650,7 @@ for (k in 1:(n - 1)) {
       idr[nc, 1] = k / gentime
     }   #interval
     meandiff = LT[(i + k), 6] - LT[i, 6]                    #mean diff.
-    poolsd = PoolSD(LT[i + k, 3], LT[i, 3], LT[i + k, 7], LT[i, 7]) #n1,n2,sd1,sd2
+    poolsd = roev::PoolSD(LT[i + k, 3], LT[i, 3], LT[i + k, 7], LT[i, 7])   #n1,n2,sd1,sd2
     idr[nc, 2] = meandiff / poolsd                      #diff.sd
     idr[nc, 3] = abs(idr[nc, 2]) / idr[nc, 1]               #rate.sd.gen
     idr[nc, 4] = log10(idr[nc, 1])                  #log.i
@@ -644,7 +700,7 @@ for (k in 1:(n - 1)) {
       idr[nc, 1] = k / gentime
     }   #interval
     meandiff = LB[(i + k), 6] - LB[i, 6]                #mean diff.
-    poolsd = PoolSD(LB[i + k, 3], LB[i, 3], LB[i + k, 7], LB[i, 7])#n1,n2,sd1,sd2
+    poolsd = roev::PoolSD(LB[i + k, 3], LB[i, 3], LB[i + k, 7], LB[i, 7])#n1,n2,sd1,sd2
     idr[nc, 2] = meandiff / poolsd                  #diff.sd
     idr[nc, 3] = abs(idr[nc, 2]) / idr[nc, 1]           #rate.sd.gen
     idr[nc, 4] = log10(idr[nc, 1])              #log.i
@@ -704,7 +760,7 @@ psize <- 1.5    #2
 #assign 'equation' position as "normal","lower","none" at end of each call
 #send (1)idrx matrix, (2)mode(diff/rate), (3)panel placement coordinate x,
 #  (4)panel placement coordinate y, (5)bootn, (6)mode, (7)psize, (8)equation
-bootresultd = TriPanelBC(idrcA, "r", 1, 4.5, bootn, mode, psize, "lower")
+bootresultd = roev::TriPanelBC(idrcA, "r", 1, 4.5, bootn, mode, psize, "lower")
 wrlb.d = bootresultd[[1]]
 bootmat.d = bootresultd[[2]]
 
@@ -712,7 +768,7 @@ bootmat.d = bootresultd[[2]]
 #====== Plot LRI panel c
 #send idrx matrix, n, mode(diff/rate), panel placement coordinates, mode
 idrcG = rbind(idrcW, idrcT, idrcB)
-bootresultr = TriPanelBC(idrcG, "r", 13, 4.5, bootn, mode, psize, "lower")
+bootresultr = roev::TriPanelBC(idrcG, "r", 13, 4.5, bootn, mode, psize, "lower")
 wrlb.r = bootresultr[[1]]
 bootmat.r = bootresultr[[2]]
 
@@ -739,7 +795,7 @@ text(
 )
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
 
 The original caption for this plot in the book is “Size change in the
 snow goose Anser caerulescens studied at La Pérouse Bay, Manitoba, from
@@ -1239,7 +1295,7 @@ bootresultd = PalPanelBC(idrx[, 1:8], "d", 1, 4.5, bootn, mode, psize, "normal",
 bootresultr = PalPanelBC(idrx[, 1:8], "r", 13, 4.5, bootn, mode, psize, "normal", 0)
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
 
 Here is the original caption for this figure from the book: “Rates of
 evolution in two Miocene merycoidodont mammal lineages spanning five
